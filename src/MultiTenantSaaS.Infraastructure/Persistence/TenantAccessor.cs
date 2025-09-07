@@ -5,6 +5,6 @@ namespace MultiTenantSaaS.Infraastructure.Persistence
 {
     public class TenantAccessor : ITenantAccessor
     {
-        public Tenant? Current { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Tenant? Current { get; set; }
     }
 }

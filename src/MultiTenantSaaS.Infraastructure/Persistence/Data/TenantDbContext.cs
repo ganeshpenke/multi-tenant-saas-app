@@ -9,11 +9,10 @@ namespace MultiTenantSaaS.Infrastructure.Persistence.Data
         public TenantDbContext(DbContextOptions<TenantDbContext> options) : base(options) { }
 
         public DbSet<Product> Products => Set<Product>();
+
         IQueryable<Product> ITenantDataContext.Products => Products;
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+        public void AddProduct(Product product) => Products.Add(product);
+
     }
 }

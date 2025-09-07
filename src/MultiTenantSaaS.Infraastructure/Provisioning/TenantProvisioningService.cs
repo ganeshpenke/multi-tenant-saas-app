@@ -25,6 +25,8 @@ namespace MultiTenantSaaS.Infraastructure.Provisioning
             string resourceGroupName = _config["Azure:ResourceGroup"]!;
             string sqlServerName = _config["Azure:SqlServerName"]!;
             string location = _config["Azure:Location"]!;
+            string sqlAdminName = _config["Azure:SqlAdminUser"]!;
+            string sqlAdminPassword = _config["Azure:SqlAdminPassword"]!;
 
             // 1. Create unique DB name
             var databaseName = $"tenant_{tenant.Id:N}";
@@ -72,10 +74,10 @@ namespace MultiTenantSaaS.Infraastructure.Provisioning
             // Run EF migrations (simplified)
             var connString = $"Server=tcp:{sqlServerName}.database.windows.net,1433;" +
                              $"Database={tenant.DatabaseName};" +
-                             $"User Id=sql;Password=Ganesh@123;Encrypt=True;";
+                             $"User Id={sqlAdminName};Password={sqlAdminPassword};Encrypt=True;";
 
             var options = new DbContextOptionsBuilder<TenantDbContext>()
-                .UseSqlServer(connString)
+                .UseSqlServer(connString, b => b.MigrationsAssembly("MultiTenantSaaS.Infrastructure"))
                 .Options;
 
             using var dbContext = new TenantDbContext(options);

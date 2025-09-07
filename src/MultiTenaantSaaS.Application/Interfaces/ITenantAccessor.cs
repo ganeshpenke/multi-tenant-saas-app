@@ -4,6 +4,10 @@ namespace MultiTenantSaaS.Application.Interfaces
 {
     public interface ITenantAccessor
     {
-        Tenant? Current { get; set; }
+        public Tenant? Current
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
     }
 }
